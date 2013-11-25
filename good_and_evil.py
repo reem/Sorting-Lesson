@@ -53,9 +53,7 @@ def fast_sort(unsorted):
     maximum = max(unsorted)
 
     # Make a list of zeroes.
-    counts = []
-    for _ in xrange(maximum - minimum + 1):
-        counts.append(0)
+    counts = [0]*(maximum - minimum + 1)
 
     # Count the number of each value in the list
     for num in unsorted:
@@ -80,7 +78,7 @@ def radix_sort(unsorted):
     "Radix sort for ints under 2**16"
     # Create 256 buckets for each first-byte value
     # from 0->255.
-    buckets = [[] for _ in xrange(256)]
+    buckets = [[] for _ in [0]*256]
 
     # For each number, get its bytes, then put its
     # least-significant byte in the bucket of its
