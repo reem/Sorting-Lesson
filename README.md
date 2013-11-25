@@ -31,7 +31,7 @@ Steps:
       performance, otherwise it's not worth the tradeoff.
  * (If we have time) Wanna see another cool sort? Explain `radix_sort` and add
    it to the tester. Turns out it isn't as fast as `fast_sort` on this data,
-   but if we were going to a different kind of data, it might be *much* faster.
+   but if we were going to sort a different kind of data, it might be *much* faster.
  * Ultimately, you should pretty much always use `sorted` unless you know that
    it's the bottle-neck in your code and you know enough about your data to
    postulate that a different algorithm like countsort or radix sort that
