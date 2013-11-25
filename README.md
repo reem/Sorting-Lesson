@@ -15,7 +15,8 @@ Steps:
    of the lists a bit.
  * Explain how `fast_sort` works and why it will be faster than `good_sort` and
    maybe even `sorted`. Run the test.
- * We've beaten `sorted`! Hurrah! Sometimes it pays to obfuscate your code a
+ * We've beaten `sorted`! Hurrah! 
+ * Sometimes it pays to obfuscate your code a
    bit if you really get a performance boost and the system is
    performance-critical.
  * Add `very_fast_sort`, which is a countsort using `numpy` functions, so it's
