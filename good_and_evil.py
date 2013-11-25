@@ -6,21 +6,32 @@ The value of a good algorithm.
 
 def good_sort(unsorted):
     "Readable quicksort."
+
+    # Base case. If the list is one element long or empty,
+    # it has to be sorted.
     if len(unsorted) < 2:
         return unsorted
 
+    # Initialize your lists and get the pivot.
     lesser = []
     greater = []
     pivot = unsorted[0]
+
+    # Go through and partition the unsorted list into
+    # values less than the pivot and values greater than
+    # the pivot.
     for i in unsorted[1:]:
         if i < pivot:
             lesser.append(i)
-        elif i >= pivot:
+        elif i >= pivot: # Equal values have to go somewhere.
             greater.append(i)
 
+    # Recursively sort each "half". This is what makes quicksort
+    # a divide and conquer algorithm.
     sorted_lesser = good_sort(lesser)
     sorted_greater = good_sort(greater)
 
+    # Return the sorted list.
     return sorted_lesser + [pivot] + sorted_greater
 
 from itertools import chain
@@ -57,6 +68,14 @@ def fast_sort(unsorted):
         sorted_list += counts[num-minimum] * [num]
     return sorted_list
 
+import numpy as np
+
+def very_fast_sort(unsorted):
+    "I am very fast, but very difficult to understand."
+    unsorted = np.asarray(unsorted)
+    return (np.repeat(np.arange(1+unsorted.max()),
+        np.bincount(unsorted))).tolist()
+
 def radix_sort(unsorted):
     "Radix sort for ints under 2**16"
     def two_bytes(num):
@@ -76,14 +95,6 @@ def radix_sort(unsorted):
 
     return [bytes_to_int(bucket_ind, i) for bucket_ind, bucket in
             enumerate(buckets) for i in bucket]
-
-import numpy as np
-
-def very_fast_sort(unsorted):
-    "I am very fast, but very difficult to understand."
-    unsorted = np.asarray(unsorted)
-    return (np.repeat(np.arange(1+unsorted.max()),
-        np.bincount(unsorted))).tolist()
 
 import sys
 from sort_test import sort_test
