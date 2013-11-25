@@ -85,14 +85,25 @@ def radix_sort(unsorted):
         "Gets an integer from its bytes."
         return (((0 << 8) + byte1) << 8) + byte2
 
+    # Create 256 buckets for each first-byte value
+    # from 0->255.
     buckets = [[] for _ in xrange(256)]
 
+    # For each number, get its bytes, then put its
+    # least-significant byte in the bucket of its
+    # most-significant byte.
     for num in unsorted:
         num_bytes = two_bytes(num)
         buckets[num_bytes[0]].append(num_bytes[1])
 
+    # Sort each bucket so values are regenerated in the
+    # right order.
     buckets = [fast_sort(bucket) for bucket in buckets]
 
+    # Recreate each number from its bytes.
+    # To get them in order, we go through the smallest MSBs first,
+    # then for each bucket generate the numbers using the MSB of the
+    # bucket and each LSB in the bucket.
     return [bytes_to_int(bucket_ind, i) for bucket_ind, bucket in
             enumerate(buckets) for i in bucket]
 
