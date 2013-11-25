@@ -103,7 +103,7 @@ from sort_test import sort_test
 def main():
     "Tests the sort."
     try:
-        size = int(sys.argv[1])
+        size = int(sys.argv[1].strip())
     except IndexError:
         size = 6
     sort_test([evil_sort,
