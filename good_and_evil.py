@@ -66,14 +66,6 @@ def fast_sort(unsorted):
         sorted_list += counts[num-minimum] * [num]
     return sorted_list
 
-import numpy as np
-
-def very_fast_sort(unsorted):
-    "I am very fast, but very difficult to understand."
-    unsorted = np.asarray(unsorted)
-    return (np.repeat(np.arange(1+unsorted.max()),
-        np.bincount(unsorted))).tolist()
-
 def radix_sort(unsorted):
     "Radix sort for ints under 2**16"
     # Create 256 buckets for each first-byte value
@@ -109,7 +101,6 @@ def main():
     sort_test([evil_sort,
                good_sort,
                fast_sort,
-               very_fast_sort,
                radix_sort,
                sorted], max_size_order=size)
 
