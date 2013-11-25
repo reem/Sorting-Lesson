@@ -23,8 +23,20 @@ Future Features:
     Where was the problem in the large list? Where they the same length? etc.
 """
 
-import numpy.random as nprnd
+import random
 import time
+
+try:
+    import numpy.random as nprnd
+except ImportError:
+    def rlist_gen(size, upper_limit):
+        "random powered random list generation "
+        return [random.randint(0, upper_limit) for _ in xrange(size)]
+else:
+    def rlist_gen(size, upper_limit):
+        "Numpy-powered random list generation."
+        return nprnd.randint(upper_limit,
+                    size=size).tolist()
 
 def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
                  check_sort = True, verbose_timing = False):
@@ -36,8 +48,6 @@ def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
     Set mult_list_size to False to check on only one size of list.
         (10 million integers under 100 thousand)
     Set check_sort to False to not do assertions on the sorted lists.
-    Set try_debug_list to False to not try the sort on a small list
-        if it fails the assertion test.
     Set verbose_timing to True to show timing data in real-time.
     """
 
@@ -80,7 +90,7 @@ def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
             except KeyError:
                 times[sort.__name__] = list([end_time - start_time])
             if verbose_timing:
-                print times[sort.__name__][-1]
+                print "It took: {:.5f}".format(times[sort.__name__][-1])
 
             if check_sort:
                 try:
@@ -101,7 +111,7 @@ def debug(sort, unsorted):
         sort.__name__, len(unsorted))
 
     print "Generating and testing debug list:"
-    debug_list = nprnd.randint(10, size = 10).tolist()
+    debug_list = rlist_gen(10, 10)
 
     print "Initial debug list: ", debug_list
     print "Sorted debug list: ", sorted(debug_list)
@@ -126,19 +136,17 @@ def gen_lists(max_size_order, mult_list_size):
     if mult_list_size:
         for i in range(2, max_size_order):
             size_random_sample = 10 ** i
-            range_upper_limit = 10 ** nprnd.randint(i-1, i)
+            range_upper_limit = 10 ** random.randint(i-1, i)
             print "Generating {} random ints with max size {}...".format(
                     size_random_sample, range_upper_limit)
-            random_list = nprnd.randint(range_upper_limit,
-                    size=size_random_sample).tolist()
+            random_list = rlist_gen(size_random_sample, range_upper_limit)
             unsorted_lists.append(random_list)
     else:
         size_random_sample = 10 ** max_size_order
         range_upper_limit = 10 ** (max_size_order - 2)
         print "Generating {} random ints with max size {}...".format(
                 size_random_sample, range_upper_limit)
-        random_list = nprnd.randint(range_upper_limit,
-                size=size_random_sample).tolist()
+        random_list = rlist_gen(size_random_sample, range_upper_limit)
         unsorted_lists.append(random_list)
     return unsorted_lists
 
