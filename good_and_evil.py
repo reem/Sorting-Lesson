@@ -78,7 +78,7 @@ def radix_sort(unsorted):
     "Radix sort for ints under 2**16"
     # Create 256 buckets for each first-byte value
     # from 0->255.
-    buckets = [[] for _ in [0]*256]
+    buckets = [[] for _ in xrange(256)]
 
     # For each number, get its bytes, then put its
     # least-significant byte in the bucket of its
