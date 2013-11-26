@@ -1,35 +1,40 @@
 """
 Jonathan Reem
+November 2013
 Radix Sort
 """
 
 import itertools
 
-def radix_sort(unsorted):
+def radix_sort(unsorted, radix=12):
     "Fast implementation of radix sort for any size num."
     maximum, minimum = max(unsorted), min(unsorted)
 
     max_bits = maximum.bit_length()
-    highest_byte = max_bits // 8 if max_bits % 8 == 0 else (max_bits // 8) + 1
+    highest_byte = max_bits // radix if not (max_bits % radix) else (max_bits
+            // radix) + 1
 
     min_bits = minimum.bit_length()
-    lowest_byte = min_bits // 8 if min_bits % 8 == 0 else (min_bits // 8) + 1
+    lowest_byte = min_bits // radix if not (min_bits % radix) else (min_bits //
+            radix) + 1
 
     sorted_list = unsorted
     for offset in xrange(lowest_byte, highest_byte):
-        sorted_list = radix_sort_offset(sorted_list, offset)
+        sorted_list = radix_sort_offset(sorted_list, offset, radix)
 
     return sorted_list
 
-def radix_sort_offset(unsorted, offset):
+def radix_sort_offset(unsorted, offset, radix):
     "Helper function for radix sort, sorts each offset."
-    byte_check = (0xFF << offset*8)
+    buckets = [[] for _ in xrange(1 << radix)]
 
-    buckets = [[] for _ in xrange(256)]
+    byte_check = (1 << radix) - 1
+    byte_access = offset*radix
 
+    # bucketappender optimization due to Tim Peters :)
+    bucketappender = [bucket.append for bucket in buckets]
     for num in unsorted:
-        byte_at_offset = (num & byte_check) >> offset*8
-        buckets[byte_at_offset].append(num)
+        bucketappender[(num >> byte_access) & byte_check](num)
 
     return itertools.chain.from_iterable(buckets)
 

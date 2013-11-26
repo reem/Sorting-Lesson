@@ -66,29 +66,6 @@ def fast_sort(unsorted):
         sorted_list += counts[num-minimum] * [num]
     return sorted_list
 
-def radix_sort(unsorted):
-    "Radix sort for ints under 2**16"
-    # Create 256 buckets for each first-byte value
-    # from 0->255.
-    buckets = [[] for _ in xrange(256)]
-
-    # For each number, get its bytes, then put its
-    # least-significant byte in the bucket of its
-    # most-significant byte.
-    for num in unsorted:
-        buckets[((num & 0xff00) >> 8)].append(num & 0xff)
-
-    # Sort each bucket so values are regenerated in the
-    # right order.
-    buckets = [fast_sort(bucket) for bucket in buckets]
-
-    # Recreate each number from its bytes.
-    # To get them in order, we go through the smallest MSBs first,
-    # then for each bucket generate the numbers using the MSB of the
-    # bucket and each LSB in the bucket.
-    return [((((0 << 8) + byte1) << 8) + byte2) for byte1, bucket in
-            enumerate(buckets) for byte2 in bucket]
-
 import sys
 from sort_test import sort_test
 
@@ -101,7 +78,6 @@ def main():
     sort_test([evil_sort,
                good_sort,
                fast_sort,
-               radix_sort,
                sorted], max_size_order=size)
 
 if __name__ == '__main__':
