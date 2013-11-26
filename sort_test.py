@@ -73,11 +73,11 @@ def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
             start_time, end_time = 0, 0
             try:
                 start_time = time.clock()
-                sorted_lists[sort.__name__].append(sort(unsorted))
+                sorted_lists[sort.__name__].append(list(sort(unsorted)))
                 end_time = time.clock()
             except KeyError:
                 start_time = time.clock()
-                sorted_lists[sort.__name__] = list([sort(unsorted)])
+                sorted_lists[sort.__name__] = list([list(sort(unsorted))])
                 end_time = time.clock()
 
             try:
