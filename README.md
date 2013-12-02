@@ -1,6 +1,5 @@
 # Lesson on Sorting #
-Steps:
- * Only test `good_sort` and `evil_sort`.
+ * Set the tester to only `good_sort` and `evil_sort`.
  * Ask students if `good_sort` or `evil_sort` is going to run faster.
  * Explain that shorter code != faster code then run the test
    * Lo and behold, `evil_sort` is slower.
