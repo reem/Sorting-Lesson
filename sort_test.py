@@ -99,17 +99,16 @@ def debug(sort, unsorted):
     print "Generating and testing debug list:"
     debug_list = rlist_gen(10, 10)
 
-    print "Initial debug list: ", debug_list
-    print "Sorted debug list: ", sorted(debug_list)
-    print "Broken sort debug list: ", list(sort(debug_list))
+    print "Initial debug list: {}".format(debug_list)
+    print "Sorted debug list: {}".format(sorted(debug_list))
+    print "Broken sort debug list: {}".format(list(sort(debug_list)))
 
 
 def gen_leaderboard(unsorted_lists, times, working_sorts):
     """Generates leaderboard from times for the working sorts."""
     for index, unsorted in enumerate(unsorted_lists):
-        leaderboard = [(times[sort.__name__][index], sort.__name__)
-                       for sort in working_sorts]
-        leaderboard = sorted(leaderboard)
+        leaderboard = sorted([(times[sort.__name__][index], sort.__name__)
+                              for sort in working_sorts])
 
         print "For list {}, with length {} and range {}: ".format(
             index + 1, len(unsorted), max(unsorted) - min(unsorted) + 1)
