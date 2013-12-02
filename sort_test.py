@@ -22,17 +22,6 @@ Future Features:
 import random
 import time
 
-try:
-    import numpy.random as nprnd
-except ImportError:
-    def rlist_gen(size, upper_limit):
-        "random powered random list generation "
-        return [random.randint(0, upper_limit) for _ in xrange(size)]
-else:
-    def rlist_gen(size, upper_limit):
-        "Numpy-powered random list generation."
-        return nprnd.randint(upper_limit, size=size).tolist()
-
 
 def sort_test(sorts_to_test, max_size_order=7, mult_list_size=True,
               check_sort=True, verbose_timing=False):
@@ -153,6 +142,11 @@ def gen_lists(max_size_order, mult_list_size):
         unsorted_lists.append(random_list)
 
     return unsorted_lists
+
+
+def rlist_gen(size, upper_limit):
+    "random powered random list generation "
+    return [random.randint(0, upper_limit - 1) for _ in xrange(size)]
 
 
 def main():
