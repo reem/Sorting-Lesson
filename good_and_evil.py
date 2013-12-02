@@ -50,8 +50,6 @@ def evil_sort(ulst):
 
 def fast_sort(unsorted):
     "This sort is fast AND clear!"
-    if len(unsorted) < 2:
-        return unsorted
 
     # We're going to use these values a lot, so we store their
     # values and only call them once.
