@@ -16,19 +16,6 @@ Steps:
  * Explain how `fast_sort` works and why it will be faster than `good_sort` and
    maybe even `sorted`. Run the test.
  * We've beaten `sorted`! Hurrah! 
- * Sometimes it pays to obfuscate your code a
-   bit if you really get a performance boost and the system is
-   performance-critical.
- * Add `very_fast_sort`, which is a countsort using `numpy` functions, so it's
-   even faster. Run the test again and show that `very_fast_sort` is even
-   faster.
- * What's the tradeoff?
-   * You have to add another dependency (numpy) which doesn't work everywhere.
-      For instance, it hasn't been ported to python3 or to pypy.
-   * This is much harder to read, so you have to comment it really well, and
-      if something doesn't work... It's very hard to debug.
-   * You should only do something like this if you really absolutely need the
-      performance, otherwise it's not worth the tradeoff.
  * (If we have time) Wanna see another cool sort? Explain `radix_sort` and add
    it to the tester. Turns out it isn't as fast as `fast_sort` on this data,
    but if we were going to sort a different kind of data, it might be *much* faster.
