@@ -43,8 +43,8 @@ def sort_test(sorts_to_test, max_size_order=7, mult_list_size=True,
     if not verbose_timing:
         print "Timing sorts... \n"
 
-    times = {}  # sort_name:times for lookup and use on the leaderboard
-    sorted_lists = {}  # sort_name:sorted_lists for lookup during sort checking
+    times = {}  # sort:times for lookup and use on the leaderboard
+    sorted_lists = {}  # sort:sorted_lists for lookup during sort checking
     for list_num, unsorted in enumerate(unsorted_lists):
         sorted_list = sorted(unsorted)
 
@@ -63,23 +63,23 @@ def sort_test(sorts_to_test, max_size_order=7, mult_list_size=True,
             start_time, end_time = 0, 0
             try:
                 start_time = time.clock()
-                sorted_lists[sort.__name__].append(list(sort(unsorted)))
+                sorted_lists[sort].append(list(sort(unsorted)))
                 end_time = time.clock()
             except KeyError:
                 start_time = time.clock()
-                sorted_lists[sort.__name__] = list([list(sort(unsorted))])
+                sorted_lists[sort] = list([list(sort(unsorted))])
                 end_time = time.clock()
 
             try:
-                times[sort.__name__].append(end_time - start_time)
+                times[sort].append(end_time - start_time)
             except KeyError:
-                times[sort.__name__] = list([end_time - start_time])
+                times[sort] = list([end_time - start_time])
             if verbose_timing:
                 print "It took: {:.5f}".format(times[sort.__name__][-1])
 
             if check_sort:
                 try:
-                    assert sorted_lists[sort.__name__][-1] == sorted_list
+                    assert sorted_lists[sort][-1] == sorted_list
                 except AssertionError:
                     debug(sort, unsorted)
                     sorts_to_test.remove(sort)
@@ -107,7 +107,7 @@ def debug(sort, unsorted):
 def gen_leaderboard(unsorted_lists, times, working_sorts):
     """Generates leaderboard from times for the working sorts."""
     for index, unsorted in enumerate(unsorted_lists):
-        leaderboard = sorted([(times[sort.__name__][index], sort.__name__)
+        leaderboard = sorted([(times[sort][index], sort.__name__)
                               for sort in working_sorts])
 
         print "For list {}, with length {} and range {}: ".format(
