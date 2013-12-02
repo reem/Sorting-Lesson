@@ -33,8 +33,9 @@ else:
         "Numpy-powered random list generation."
         return nprnd.randint(upper_limit, size=size).tolist()
 
-def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
-                 check_sort = True, verbose_timing = False):
+
+def sort_test(sorts_to_test, max_size_order=7, mult_list_size=True,
+              check_sort=True, verbose_timing=False):
     """
     Takes as input a list of sorts and runs tests on them.
     Set max_size_order to the largest list size you want where the
@@ -53,8 +54,8 @@ def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
     if not verbose_timing:
         print "Timing sorts... \n"
 
-    times = {} # sort_name:times_in_order for lookup and use on the leaderboard
-    sorted_lists = {} # sort_name:sorted_lists for lookup during sort checking
+    times = {}  # sort_name:times for lookup and use on the leaderboard
+    sorted_lists = {}  # sort_name:sorted_lists for lookup during sort checking
     for list_num, unsorted in enumerate(unsorted_lists):
         sorted_list = sorted(unsorted)
 
@@ -67,7 +68,7 @@ def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
             # skip the sort immediately after a broken sort.
             if verbose_timing:
                 print "For {} items, trying {}...".format(
-                        len(unsorted), sort.__name__)
+                    len(unsorted), sort.__name__)
 
             #Timing is done inside the try/except blocks to avoid extra time.
             start_time, end_time = 0, 0
@@ -98,6 +99,7 @@ def sort_test(sorts_to_test, max_size_order = 7, mult_list_size = True,
     print ''
     gen_leaderboard(unsorted_lists, times, sorts_to_test)
 
+
 def debug(sort, unsorted):
     """Prints debug information for a failed sort to avoid silent failure and
     removal of the sort."""
@@ -112,18 +114,20 @@ def debug(sort, unsorted):
     print "Sorted debug list: ", sorted(debug_list)
     print "Broken sort debug list: ", list(sort(debug_list))
 
+
 def gen_leaderboard(unsorted_lists, times, working_sorts):
     """Generates leaderboard from times for the working sorts."""
     for index, unsorted in enumerate(unsorted_lists):
         leaderboard = [(times[sort.__name__][index], sort.__name__)
-                for sort in working_sorts]
+                       for sort in working_sorts]
         leaderboard = sorted(leaderboard)
 
-        print "For list {}, with length {} and range {}: ".format(index + 1,
-                len(unsorted), max(unsorted) - min(unsorted) + 1)
+        print "For list {}, with length {} and range {}: ".format(
+            index + 1, len(unsorted), max(unsorted) - min(unsorted) + 1)
         for sort_time, sort_name in leaderboard:
             print "{:.5f} {}".format(sort_time, sort_name)
         print ''
+
 
 def gen_lists(max_size_order, mult_list_size):
     """Generates random lists for testing."""
@@ -131,19 +135,25 @@ def gen_lists(max_size_order, mult_list_size):
     if mult_list_size:
         for i in range(2, max_size_order):
             size_random_sample = 10 ** i
-            range_upper_limit = 10 ** (i-1)
+            range_upper_limit = 10 ** (i - 1)
+
             print "Generating {} random ints with max size {}...".format(
-                    size_random_sample, range_upper_limit)
+                size_random_sample, range_upper_limit)
+
             random_list = rlist_gen(size_random_sample, range_upper_limit)
             unsorted_lists.append(random_list)
     else:
         size_random_sample = 10 ** max_size_order
         range_upper_limit = 10 ** (max_size_order - 2)
+
         print "Generating {} random ints with max size {}...".format(
-                size_random_sample, range_upper_limit)
+            size_random_sample, range_upper_limit)
+
         random_list = rlist_gen(size_random_sample, range_upper_limit)
         unsorted_lists.append(random_list)
+
     return unsorted_lists
+
 
 def main():
     "Runs sort_test on some sample sorts."
@@ -159,7 +169,7 @@ def main():
         "Example of a slow sort."
         string_version = ''
         for num in range(len(unsorted_list) // 5):
-            string_version += str(num) # Slow operation
+            string_version += str(num)  # Slow operation
         if len(string_version) > len(unsorted_list):
             pass
         return sorted(unsorted_list)
