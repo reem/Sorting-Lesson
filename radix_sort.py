@@ -51,5 +51,6 @@ def main():
         size = 6
     sort_test([radix_sort, sorted], max_size_order=size)
 
+
 if __name__ == '__main__':
     main()
